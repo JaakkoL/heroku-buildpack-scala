@@ -135,6 +135,9 @@ for DIR in $CACHED_DIRS ; do
   if [ -d $DIR ] ; then
     cp -r $DIR/.  $CACHE_DIR/$DIR
   fi
+  # drop ivy cache for smaller slug size
+  echo "-----> Dropping ivy cache from the slug"
+  rm -rf $SBT_USER_HOME/.ivy2
 done
 
 # drop ivy cache from slug for play only
@@ -142,13 +145,3 @@ if is_play $BUILD_DIR && [ -d $SBT_USER_HOME/.ivy2 ] ; then
   echo "-----> Dropping ivy cache from the slug" 
   rm -rf $SBT_USER_HOME/.ivy2 
 fi
-
-# drop ivy cache for smaller slug size
-for DIR in $CACHED_DIRS ; do
-rm -rf $CACHE_DIR/$DIR
-mkdir -p $CACHE_DIR/$DIR
-cp -r $DIR/.  $CACHE_DIR/$DIR
-# The following 2 lines are what you would add
-echo "-----> Dropping ivy cache from the slug"
-rm -rf $SBT_USER_HOME/.ivy2
-
